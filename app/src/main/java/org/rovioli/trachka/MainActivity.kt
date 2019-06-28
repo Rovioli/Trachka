@@ -11,15 +11,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        val users = arrayListOf(
-            "Рома", "Дима", "Берг", "Виталий", "Холло", "Никита",
-            "Игорь", "Валерия", "Борис", "Влад", "Тимофей", "Егор", "Гадель"
-        )
-        usernameSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, users)
+        val service = (application as App).service
+        val users = service.getUsers() ?: listOf()
+        val names = users.map { it.name }
+
+        usernameSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, names)
 
         val intent = Intent(this, UserActivity::class.java)
             .putExtra("name", usernameSpinner.selectedItem.toString())
-            .putExtra("id", usernameSpinner.selectedItemId)
+            .putExtra("id", usernameSpinner.selectedItemId + 1)
 
         login.setOnClickListener {
             startActivity(intent)
