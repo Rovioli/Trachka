@@ -1,15 +1,15 @@
 package org.rovioli.trachka
 
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ZhrachkaClient {
     @GET("/zhrachka/home/getusers")
-    fun getUsers(): Call<List<User>>
+    suspend fun getUsers(): Response<UserData>
 
     @GET("/zhrachka/home/getalldata")
-    fun getData(): Call<List<Data>>
+    fun getData(): Response<List<Data>>
 
     @GET("/zhrachka/home/getaddspendings")
     fun addSpending(

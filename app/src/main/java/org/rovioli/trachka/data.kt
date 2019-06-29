@@ -1,5 +1,9 @@
 package org.rovioli.trachka
 
+data class UserData(
+    val users: List<User>
+)
+
 data class User(
     val id: Int,
     val name: String

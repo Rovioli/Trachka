@@ -1,9 +1,7 @@
 package org.rovioli.trachka
 
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
-class ZhrachkaService(val client: ZhrachkaClient) {
-    // TODO: coroutines
-    fun getUsers() =  client.getUsers().execute().body()
+class ZhrachkaService(private val client: ZhrachkaClient) {
+    suspend fun getUsers() = client.getUsers()
 }
