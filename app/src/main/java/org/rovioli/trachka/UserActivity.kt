@@ -21,7 +21,7 @@ class UserActivity : AppCompatActivity() {
             .setPositiveButton(R.string.add) { dialog, id ->
 
             }
-            .setNegativeButton(R.string.cancel) { dialog, id ->
+            .setNegativeButton(android.R.string.cancel) { dialog, id ->
 
             }
 
@@ -31,16 +31,21 @@ class UserActivity : AppCompatActivity() {
     private val onNavigationItemSelectedListener = OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                message.text = bodytext
+                message.visibility = View.GONE
+                // myList.visiblility = View.VISIBLE
+                // top.visiblility = View.GONE
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                message.text = ""
+                message.visibility = View.VISIBLE
+                // myList.visiblility = View.GONE
+                // top.visiblility = View.VISIBLE
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
                 message.visibility = View.VISIBLE
-                message.setText(R.string.not_implemented)
+                // myList.visiblility = View.GONE
+                // top.visiblility = View.GONE
                 return@OnNavigationItemSelectedListener true
             }
         }
