@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class UserActivity : AppCompatActivity() {
 
     private lateinit var textMessage: TextView
-    private var bodytext = ""
+    private var bodytext = "noffin"
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
@@ -44,7 +44,10 @@ class UserActivity : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 val response = Connector.client.getData()
-                bodytext = response.body().toString()
+                val body = response.body()
+                if (body != null) {
+                    bodytext = body.data[0].descr
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(context, "Connection Error", Toast.LENGTH_LONG).show()

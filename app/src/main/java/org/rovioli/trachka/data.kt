@@ -2,9 +2,9 @@ package org.rovioli.trachka
 
 import com.google.gson.annotations.SerializedName
 
-data class UserData(
+data class Data<T>(
     @SerializedName("Data")
-    val data: List<User>
+    val data: List<T>
 )
 
 data class User(
@@ -12,7 +12,7 @@ data class User(
     val name: String = ""
 )
 
-data class Data(
+data class Spending(
     val id: Int,
     val userid: Int,
     val dow: Int,
