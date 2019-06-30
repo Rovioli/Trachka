@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
                 usernameSpinner.visibility = View.VISIBLE
                 login.visibility = View.VISIBLE
                 progressBar.visibility = View.GONE
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
                 e.printStackTrace()
                 Toast.makeText(context, "Connection Error", Toast.LENGTH_LONG).show()
                 progressBar.visibility = View.GONE
