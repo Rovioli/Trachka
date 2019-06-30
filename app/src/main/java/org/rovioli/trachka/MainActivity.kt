@@ -18,13 +18,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        val service = Retrofit.Builder()
-            .baseUrl("")
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .build()
-            .create(ZhrachkaClient::class.java)
-
+        val service = Connector.client
         val context = this
 
         GlobalScope.launch(Dispatchers.Main) {
