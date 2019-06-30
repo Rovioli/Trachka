@@ -7,27 +7,31 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        val service = (application as App).service
+        val service = Retrofit.Builder()
+            .baseUrl("")
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .build()
+            .create(ZhrachkaClient::class.java)
+
         val context = this
 
         GlobalScope.launch(Dispatchers.Main) {
-            val response = service.getUsers()
             try {
-                val body = response.body()
-                val users = body?.users ?: listOf()
-                val names = users.map { it.name }
-                println("Users: $users")
+                val response = service.getUsers()
+                val users = response.body()?.data
+                val names = users?.map { it.name }
                 usernameSpinner.adapter = ArrayAdapter(
                     context, android.R.layout.simple_spinner_dropdown_item, names
                 )
