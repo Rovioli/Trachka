@@ -1,5 +1,8 @@
 package org.rovioli.trachka
 
-import java.time.DayOfWeek
+// TODO: replace this with a correct date
+val week = arrayOf(
+    "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
+)
 
-fun getDayOfWeek(i: Int) = DayOfWeek.values()[i - 1].toString()
+fun getDayOfWeek(i: Int) = week[i - 1]

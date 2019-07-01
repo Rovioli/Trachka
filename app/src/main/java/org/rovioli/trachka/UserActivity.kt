@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.dialog_add_spending.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.time.DayOfWeek
 
 class UserActivity : AppCompatActivity() {
 
@@ -25,7 +24,7 @@ class UserActivity : AppCompatActivity() {
         root.dayOfWeekChooser.adapter = ArrayAdapter(
             context,
             android.R.layout.simple_spinner_dropdown_item,
-            DayOfWeek.values()
+            week
         )
         val builder = AlertDialog.Builder(this)
         builder.setMessage(R.string.add_spending)
