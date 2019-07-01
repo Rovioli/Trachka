@@ -1,5 +1,6 @@
 package org.rovioli.trachka
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -32,20 +33,20 @@ class UserActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.navigation_home -> {
                 message.visibility = View.GONE
-                // myList.visiblility = View.VISIBLE
-                // top.visiblility = View.GONE
+                myList.visibility = View.VISIBLE
+                top.visibility = View.GONE
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
-                message.visibility = View.VISIBLE
-                // myList.visiblility = View.GONE
-                // top.visiblility = View.VISIBLE
+            R.id.navigation_top -> {
+                message.visibility = View.GONE
+                myList.visibility = View.GONE
+                top.visibility = View.VISIBLE
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_notifications -> {
+            R.id.navigation_settings -> {
                 message.visibility = View.VISIBLE
-                // myList.visiblility = View.GONE
-                // top.visiblility = View.GONE
+                myList.visibility = View.GONE
+                top.visibility = View.GONE
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -56,14 +57,13 @@ class UserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
         val context = this
+        val userId = intent.getIntExtra("id", 0)
 
         GlobalScope.launch(Dispatchers.Main) {
             try {
-                val response = Connector.client.getData()
-                val body = response.body()
-                if (body != null) {
-                    bodytext = body.data[0].descr
-                }
+                val body = Connector.client.getData().body() ?: throw NoSuchElementException("Have no body")
+                initHome(context, userId, body)
+                initTop(context, body)
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
@@ -72,5 +72,20 @@ class UserActivity : AppCompatActivity() {
 
         addButton.setOnClickListener { dialog.show() }
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+    }
+
+    private fun initHome(context: Context, userId: Int, body: Data<Spending>) {
+        val spending = body.data
+            .filter { it.userid == userId }
+            .sortedByDescending { it.dow }
+        spending.forEach { println(it) }
+        myList.adapter = SpendingAdapter(context, spending)
+    }
+
+    private fun initTop(context: Context, body: Data<Spending>) {
+        val spending = body.data
+            .sortedByDescending { it.dow }
+        spending.forEach { println(it) }
+        top.adapter = SpendingAdapter(context, spending, true)
     }
 }

@@ -41,7 +41,8 @@ class MainActivity : AppCompatActivity() {
 
         login.setOnClickListener {
             intent.putExtra("name", usernameSpinner.selectedItem.toString())
-            intent.putExtra("id", usernameSpinner.selectedItemId + 1)
+            val userId = usernameSpinner.selectedItemId + 1
+            intent.putExtra("id", userId.toInt())
             startActivity(intent)
         }
     }
