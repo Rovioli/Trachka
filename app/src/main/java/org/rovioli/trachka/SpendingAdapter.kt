@@ -6,8 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.TextView
-import java.time.DayOfWeek
+import kotlinx.android.synthetic.main.spending.view.*
 
 class SpendingAdapter(
     private val ctx: Context,
@@ -20,8 +19,8 @@ class SpendingAdapter(
         val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val layout = inflater.inflate(R.layout.spending, parent, false)
         setVisibility(layout, position, showName)
-        layout.setTo(R.id.comment, spending[position].descr)
-        layout.setTo(R.id.money, spending[position].price.toString())
+        layout.comment.text = spending[position].descr
+        layout.money.text = spending[position].price.toString()
         return layout
     }
 
@@ -32,16 +31,10 @@ class SpendingAdapter(
         if (visible) {
 
             info.visibility = View.VISIBLE
-            parent.setTo(R.id.name, spending[position].username)
-            parent.setTo(R.id.dayOfWeek, getDayOfWeek(spending[position].dow))
+            parent.name.text = spending[position].username
+            parent.dayOfWeek.text = getDayOfWeek(spending[position].dow)
         } else {
             info.visibility = View.GONE
         }
     }
-}
-
-private fun getDayOfWeek(i: Int) = DayOfWeek.values()[i - 1].toString()
-
-private fun View.setTo(id: Int, data: String) {
-    findViewById<TextView>(id).text = data
 }

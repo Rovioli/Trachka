@@ -3,28 +3,51 @@ package org.rovioli.trachka
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener
 import kotlinx.android.synthetic.main.activity_user.*
+import kotlinx.android.synthetic.main.dialog_add_spending.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.time.DayOfWeek
 
 class UserActivity : AppCompatActivity() {
 
-    private var bodytext = "noffin"
+    private var userId = 0
+
     private val dialog: AlertDialog by lazy {
+        val root = layoutInflater.inflate(R.layout.dialog_add_spending, null)
+        val context = root.context
+        root.dayOfWeekChooser.adapter = ArrayAdapter(
+            context,
+            android.R.layout.simple_spinner_dropdown_item,
+            DayOfWeek.values()
+        )
         val builder = AlertDialog.Builder(this)
         builder.setMessage(R.string.add_spending)
-            .setView(layoutInflater.inflate(R.layout.dialog_add_spending, null))
-            .setPositiveButton(R.string.add) { dialog, id ->
-
+            .setView(root)
+            .setPositiveButton(R.string.add) { _, _ ->
+                GlobalScope.launch(Dispatchers.Main) {
+                    Connector.client.addSpending(
+                        userId,
+                        root.dayOfWeekChooser.selectedItemId.toInt() + 1,
+                        root.comment.text.toString(),
+                        root.amount_of_money.text
+                            .toString()
+                            .toInt()
+                    )
+                    Toast.makeText(
+                        context,
+                        "Paid ${root.amount_of_money.text.toString().toInt()} for ${root.comment.text}!",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
-            .setNegativeButton(android.R.string.cancel) { dialog, id ->
-
-            }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }
 
         builder.create()
     }
@@ -57,7 +80,7 @@ class UserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
         val context = this
-        val userId = intent.getIntExtra("id", 0)
+        userId = intent.getIntExtra("id", 0)
 
         GlobalScope.launch(Dispatchers.Main) {
             try {
@@ -78,14 +101,12 @@ class UserActivity : AppCompatActivity() {
         val spending = body.data
             .filter { it.userid == userId }
             .sortedByDescending { it.dow }
-        spending.forEach { println(it) }
         myList.adapter = SpendingAdapter(context, spending)
     }
 
     private fun initTop(context: Context, body: Data<Spending>) {
         val spending = body.data
             .sortedByDescending { it.dow }
-        spending.forEach { println(it) }
         top.adapter = SpendingAdapter(context, spending, true)
     }
 }
