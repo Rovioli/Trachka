@@ -19,5 +19,7 @@ data class Spending(
     val descr: String,
     val price: Int,
     val username: String,
-    val downame: String
+    val downame: String,
+    @SerializedName("time_stamp")
+    val timeStamp: Int
 )

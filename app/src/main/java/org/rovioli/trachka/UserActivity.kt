@@ -2,12 +2,10 @@ package org.rovioli.trachka
 
 import android.content.Context
 import android.os.Bundle
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener
 import kotlinx.android.synthetic.main.activity_user.*
 import kotlinx.android.synthetic.main.dialog_add_spending.view.*
 import kotlinx.coroutines.Dispatchers
@@ -51,30 +49,6 @@ class UserActivity : AppCompatActivity() {
         builder.create()
     }
 
-    private val onNavigationItemSelectedListener = OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                message.visibility = View.GONE
-                myList.visibility = View.VISIBLE
-                top.visibility = View.GONE
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_top -> {
-                message.visibility = View.GONE
-                myList.visibility = View.GONE
-                top.visibility = View.VISIBLE
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_settings -> {
-                message.visibility = View.VISIBLE
-                myList.visibility = View.GONE
-                top.visibility = View.GONE
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
@@ -91,21 +65,31 @@ class UserActivity : AppCompatActivity() {
                 Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
             }
         }
-
         addButton.setOnClickListener { dialog.show() }
-        navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        navView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    viewPager.setCurrentItem(0, true)
+                }
+                R.id.navigation_top -> {
+                    viewPager.setCurrentItem(1, true)
+                }
+                R.id.navigation_settings -> {
+                    viewPager.setCurrentItem(2, true)
+                }
+            }
+            true
+        }
     }
 
     private fun initHome(context: Context, userId: Int, body: Data<Spending>) {
         val spending = body.data
             .filter { it.userid == userId }
             .sortedByDescending { it.dow }
-        myList.adapter = SpendingAdapter(context, spending)
     }
 
     private fun initTop(context: Context, body: Data<Spending>) {
         val spending = body.data
             .sortedByDescending { it.dow }
-        top.adapter = SpendingAdapter(context, spending, true)
     }
 }

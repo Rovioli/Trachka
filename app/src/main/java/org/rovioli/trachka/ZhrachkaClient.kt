@@ -5,13 +5,13 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ZhrachkaClient {
-    @GET("zhrachka/home/getusers")
+    @GET("zhrachka/home/users")
     suspend fun getUsers(): Response<Data<User>>
 
-    @GET("zhrachka/home/getalldata")
+    @GET("zhrachka/home/alldata")
     suspend fun getData(): Response<Data<Spending>>
 
-    @GET("zhrachka/home/getaddspendings")
+    @GET("zhrachka/home/addspendings")
     suspend fun addSpending(
         @Query("userid") userid: Int?,
         @Query("dow") dow: Int?,
@@ -19,16 +19,17 @@ interface ZhrachkaClient {
         @Query("price") price: Int?
     ): Int?
 
-    @GET("zhrachka/home/geteditspendings")
+    @GET("zhrachka/home/editspendings")
     suspend fun editSpending(
         @Query("userid") userid: Int?,
         @Query("dow") dow: Int?,
         @Query("descr") descr: String?,
         @Query("price") price: Int?,
-        @Query("id") id: Int?
+        @Query("id") id: Int?,
+        @Query("time_stamp") timeStamp: Int?
     ): Int?
 
-    @GET("zhrachka/home/getdeletespendings")
+    @GET("zhrachka/home/deletespendings")
     suspend fun deleteSpending(
         @Query("userid") userid: Int?,
         @Query("id") id: Int?
