@@ -9,7 +9,7 @@ interface ZhrachkaClient {
     suspend fun getUsers(): Response<Data<User>>
 
     @GET("zhrachka/home/alldata")
-    suspend fun getData(): Response<Data<Spending>>
+    suspend fun getData(): Response<List<Spending>>
 
     @GET("zhrachka/home/addspendings")
     suspend fun addSpending(
