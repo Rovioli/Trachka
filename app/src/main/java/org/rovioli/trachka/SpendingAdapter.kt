@@ -29,7 +29,6 @@ class SpendingAdapter(
     private fun setVisibility(parent: View, position: Int, visible: Boolean) {
         val info = parent.findViewById<View>(R.id.commonInfo)
         if (visible) {
-
             info.visibility = View.VISIBLE
             parent.name.text = spending[position].username
             parent.dayOfWeek.text = getDayOfWeek(spending[position].dow)

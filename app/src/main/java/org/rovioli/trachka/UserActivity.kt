@@ -2,6 +2,7 @@ package org.rovioli.trachka
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -27,23 +28,7 @@ class UserActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage(R.string.add_spending)
             .setView(root)
-            .setPositiveButton(R.string.add) { _, _ ->
-                GlobalScope.launch(Dispatchers.Main) {
-                    Connector.client.addSpending(
-                        userId,
-                        root.dayOfWeekChooser.selectedItemId.toInt() + 1,
-                        root.comment.text.toString(),
-                        root.amount_of_money.text
-                            .toString()
-                            .toInt()
-                    )
-                    Toast.makeText(
-                        context,
-                        "Paid ${root.amount_of_money.text.toString().toInt()} for ${root.comment.text}!",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
+            .setPositiveButton(R.string.add) { _, _ -> addSpending(context, root) }
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
 
         builder.create()
@@ -78,18 +63,35 @@ class UserActivity : AppCompatActivity() {
                     viewPager.setCurrentItem(2, true)
                 }
             }
-            true
+            return@setOnNavigationItemSelectedListener true
         }
     }
 
-    private fun initHome(context: Context, userId: Int, body: Data<Spending>) {
-        val spending = body.data
+    private fun initHome(context: Context, userId: Int, body: List<Spending>) {
+        val spending = body
             .filter { it.userid == userId }
             .sortedByDescending { it.dow }
     }
 
-    private fun initTop(context: Context, body: Data<Spending>) {
-        val spending = body.data
-            .sortedByDescending { it.dow }
+    private fun initTop(context: Context, body: List<Spending>) {
+        val spending = body.sortedByDescending { it.dow }
+    }
+
+    private fun addSpending(context: Context, root: View) {
+        GlobalScope.launch(Dispatchers.Main) {
+            Connector.client.addSpending(
+                userId,
+                root.dayOfWeekChooser.selectedItemId.toInt() + 1,
+                root.comment.text.toString(),
+                root.amount_of_money.text
+                    .toString()
+                    .toInt()
+            )
+            Toast.makeText(
+                context,
+                "Paid ${root.amount_of_money.text.toString().toInt()} for ${root.comment.text}!",
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 }
