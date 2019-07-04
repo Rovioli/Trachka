@@ -1,8 +1,8 @@
 package org.rovioli.trachka.fragments
 
-
 import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.dialog_add_spending.view.*
-import kotlinx.android.synthetic.main.stats_fragment.*
+import kotlinx.android.synthetic.main.user_spending_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -29,12 +29,12 @@ class UserSpendingFragment : Fragment() {
             try {
                 val body = Connector.client.getData().body() ?: throw NoSuchElementException("Have no body")
                 mySpending.adapter = SpendingAdapter(context, getSpending(userId, body))
+                addButton.setOnClickListener { dialog.show() }
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show()
             }
         }
-        addButton.setOnClickListener { dialog.show() }
         return view
     }
 
