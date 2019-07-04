@@ -6,7 +6,7 @@ import retrofit2.http.Query
 
 interface ZhrachkaClient {
     @GET("zhrachka/home/users")
-    suspend fun getUsers(): Response<Data<User>>
+    suspend fun getUsers(): Response<List<User>>
 
     @GET("zhrachka/home/alldata")
     suspend fun getData(): Response<List<Spending>>

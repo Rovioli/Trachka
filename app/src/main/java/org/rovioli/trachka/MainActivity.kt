@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         progressBar.visibility = View.VISIBLE
 
         val response = Connector.client.getUsers()
-        val users = response.body()?.data
+        val users = response.body()
         val names = users?.map { it.name }
         usernameSpinner.adapter = ArrayAdapter(
             context, android.R.layout.simple_spinner_dropdown_item, names
