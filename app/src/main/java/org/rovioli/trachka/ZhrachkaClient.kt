@@ -14,7 +14,7 @@ interface ZhrachkaClient {
     @GET("zhrachka/home/addspendings")
     suspend fun addSpending(
         @Query("userid") userid: Int?,
-        @Query("dow") dow: Int?,
+        @Query("time_stamp") time: Long?,
         @Query("descr") descr: String?,
         @Query("price") price: Int?
     ): Int?
