@@ -23,5 +23,12 @@
     <string name="title_top">Top</string>
     <string name="rur">₽</string>
     <string name="try_again">Try again</string>
+    <string name="title_activity_highscores">highscores</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="highscore_wasteful_tab">Thrift</string>
+    <string name="highscore_thrifty_tab">Waste</string>
+    <string name="thrifty_top">Thrifty Top</string>
+    <string name="wasteful_top">Wasteful Top</string>
 
 </resources>
