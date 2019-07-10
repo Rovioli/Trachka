@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#689E3A</color>
     <color name="colorAccent">#689E3A</color>
     <color name="subtitle">#969696</color>
+    <color name="firstScore">#F0B720</color>
+    <color name="secondScore">#A9A9A9</color>
+    <color name="thirdScore">#C1651B</color>
 </resources>

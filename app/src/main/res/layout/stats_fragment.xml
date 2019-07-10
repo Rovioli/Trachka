@@ -38,13 +38,11 @@
                 android:gravity="center_horizontal"
                 tools:text="@string/wasteful_top"/>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <ListView
                 android:layout_marginTop="16dp"
                 android:id="@+id/recordList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-        </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="wrap_content"/>
 
     </LinearLayout>
 </LinearLayout>

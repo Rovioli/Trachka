@@ -11,6 +11,11 @@ interface ZhrachkaClient {
     @GET("zhrachka/home/alldata")
     suspend fun getData(): Response<List<Spending>>
 
+    @GET("zhrachka/home/alldata")
+    suspend fun getData(
+        @Query("userid") userid: Int?
+    ): Response<List<Spending>>
+
     @GET("zhrachka/home/addspendings")
     suspend fun addSpending(
         @Query("userid") userid: Int?,
