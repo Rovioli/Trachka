@@ -17,5 +17,7 @@ data class Spending(
     val downame: String,
     @SerializedName("time_stampUnix")
     val timeStamp: Int,
+    @SerializedName("time_stampISO8601")
+    val timeStampIso: String,
     val cur: String
 )
