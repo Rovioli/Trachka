@@ -24,7 +24,6 @@ class ExpensesPresenter(
                 view.raiseToast("Connection error! ${e.localizedMessage}")
             }
         }
-
     }
 
     fun addExpense(userId: Int, money: Double, comment: String, currency: String) {
