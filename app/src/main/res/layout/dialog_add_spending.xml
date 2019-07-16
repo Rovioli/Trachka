@@ -7,8 +7,10 @@
 
     <Spinner
             android:id="@+id/currency"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
     <EditText
             android:id="@+id/amount_of_money"

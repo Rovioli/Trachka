@@ -24,7 +24,7 @@ interface ZhrachkaApi {
         @Query("userid") userid: Int,
         @Query("time_stamp") time: Long,
         @Query("descr") descr: String,
-        @Query("price") price: Int,
+        @Query("price") price: Double,
         @Query("cur") currency: String
     ): Int?
 

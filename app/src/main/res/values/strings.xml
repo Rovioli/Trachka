@@ -16,7 +16,7 @@
     <string name="title_spreadsheet">Spreadsheet</string>
     <string name="not_implemented">NOT IMPLEMENTED YET</string>
     <string name="add_spending">Add spending</string>
-    <string name="money">Money, in RUR</string>
+    <string name="money">Amount of money</string>
     <string name="comment">Comment</string>
     <string name="add">add</string>
     <string name="connection_error">Connection Error</string>

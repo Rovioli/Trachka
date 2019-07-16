@@ -21,13 +21,13 @@ class ExpensesPresenter(
                 view.onExpensesLoaded(body.sortedBy { it.timeStamp })
             } catch (e: Exception) {
                 e.printStackTrace()
-                view.raiseToast("Connection error!")
+                view.raiseToast("Connection error! ${e.localizedMessage}")
             }
         }
 
     }
 
-    fun addExpense(userId: Int, money: Int, comment: String, currency: String) {
+    fun addExpense(userId: Int, money: Double, comment: String, currency: String) {
         GlobalScope.launch(Dispatchers.Main) {
             client.addSpending(userId, currentTimeSeconds(), comment, money, currency)
             view.raiseToast("Done!")

@@ -14,6 +14,7 @@ import org.rovioli.trachka.R
 import org.rovioli.trachka.model.Spending
 import org.rovioli.trachka.model.ZhrachkaApi
 import org.rovioli.trachka.presenter.ExpensesPresenter
+import java.lang.Exception
 
 class UserSpendingFragment : Fragment(), UserSpendingView<Spending> {
     private val presenter = ExpensesPresenter(this, ZhrachkaApi.CLIENT)
@@ -26,14 +27,18 @@ class UserSpendingFragment : Fragment(), UserSpendingView<Spending> {
             .setTitle(R.string.add_spending)
             .setView(root)
             .setPositiveButton(R.string.add) { _, _ ->
+                try {
                 presenter.addExpense(
                     userId,
-                    root.amount_of_money.text.toString().toInt(), // GOD, PLEASE, NO!!!
+                    root.amount_of_money.text.toString().toDouble(), // GOD, PLEASE, NO!!!
                     root.comment.text.toString(),
                     root.currency.selectedItem.toString()
                     // TODO: get datetime
                 )
                 presenter.requestUserExpenses(userId)
+                } catch (e: Exception) {
+                raiseToast(e.localizedMessage)
+                }
             }
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .create()

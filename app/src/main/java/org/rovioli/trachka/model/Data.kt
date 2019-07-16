@@ -12,7 +12,7 @@ data class Spending(
     val userid: Int,
     val dow: Int,
     val descr: String,
-    val price: Int,
+    val price: Double,
     val username: String,
     val downame: String,
     @SerializedName("time_stampUnix")
