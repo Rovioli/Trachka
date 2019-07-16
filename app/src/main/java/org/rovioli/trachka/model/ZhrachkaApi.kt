@@ -25,6 +25,7 @@ interface ZhrachkaApi {
         @Query("time_stamp") time: Long?,
         @Query("descr") descr: String?,
         @Query("price") price: Int?
+        // TODO: API can take currency
     ): Int?
 
     @GET("zhrachka/home/editspendings")
