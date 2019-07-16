@@ -2,11 +2,6 @@ package org.rovioli.trachka.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Data<T>(
-    @SerializedName("Data")
-    val data: List<T>
-)
-
 data class User(
     val id: Int = 0,
     val name: String = ""
