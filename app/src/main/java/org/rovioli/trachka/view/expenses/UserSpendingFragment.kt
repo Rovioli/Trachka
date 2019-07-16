@@ -27,7 +27,6 @@ class UserSpendingFragment : Fragment(), UserSpendingView<Spending> {
             .setTitle(R.string.add_spending)
             .setView(root)
             .setPositiveButton(R.string.add) { _, _ ->
-                try {
                 presenter.addExpense(
                     userId,
                     root.amount_of_money.text.toString().toDouble(), // GOD, PLEASE, NO!!!
@@ -36,9 +35,6 @@ class UserSpendingFragment : Fragment(), UserSpendingView<Spending> {
                     // TODO: get datetime
                 )
                 presenter.requestUserExpenses(userId)
-                } catch (e: Exception) {
-                raiseToast(e.localizedMessage)
-                }
             }
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .create()
