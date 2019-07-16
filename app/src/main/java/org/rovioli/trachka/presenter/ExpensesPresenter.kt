@@ -27,14 +27,9 @@ class ExpensesPresenter(
 
     }
 
-    fun addExpense(
-        userId: Int,
-        money: Int,
-        comment: String,
-        currency: String = "RUB"
-    ) {
+    fun addExpense(userId: Int, money: Int, comment: String, currency: String) {
         GlobalScope.launch(Dispatchers.Main) {
-            client.addSpending(userId, currentTimeSeconds(), comment, money)
+            client.addSpending(userId, currentTimeSeconds(), comment, money, currency)
             view.raiseToast("Done!")
         }
     }

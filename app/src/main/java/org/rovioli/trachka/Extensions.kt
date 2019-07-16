@@ -10,6 +10,6 @@ val week = arrayOf(
 
 fun getDayOfWeek(i: Int) = week[i - 1]
 
-fun currentTimeSeconds(): Long? = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
+fun currentTimeSeconds(): Long = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
 
 fun View.getString(id: Int): String = this.context.getString(id)

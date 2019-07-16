@@ -21,11 +21,11 @@ interface ZhrachkaApi {
 
     @GET("zhrachka/home/addspendings")
     suspend fun addSpending(
-        @Query("userid") userid: Int?,
-        @Query("time_stamp") time: Long?,
-        @Query("descr") descr: String?,
-        @Query("price") price: Int?
-        // TODO: API can take currency
+        @Query("userid") userid: Int,
+        @Query("time_stamp") time: Long,
+        @Query("descr") descr: String,
+        @Query("price") price: Int,
+        @Query("cur") currency: String
     ): Int?
 
     @GET("zhrachka/home/editspendings")

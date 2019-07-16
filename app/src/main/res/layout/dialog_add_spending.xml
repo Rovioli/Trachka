@@ -5,6 +5,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    <Spinner
+            android:id="@+id/currency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     <EditText
             android:id="@+id/amount_of_money"
             android:inputType="numberDecimal"

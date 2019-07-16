@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -20,18 +21,16 @@ class UserSpendingFragment : Fragment(), UserSpendingView<Spending> {
 
     private val dialog: AlertDialog by lazy {
         val root = layoutInflater.inflate(R.layout.dialog_add_spending, null)
-
-        AlertDialog.Builder(this.context!!)
+        configureSpinner(root)
+        AlertDialog.Builder(context!!)
             .setTitle(R.string.add_spending)
             .setView(root)
             .setPositiveButton(R.string.add) { _, _ ->
                 presenter.addExpense(
                     userId,
-                    root.amount_of_money.text
-                        .toString()
-                        .toInt(),
-                    root.comment.text.toString()
-                    // TODO: get currency
+                    root.amount_of_money.text.toString().toInt(), // GOD, PLEASE, NO!!!
+                    root.comment.text.toString(),
+                    root.currency.selectedItem.toString()
                     // TODO: get datetime
                 )
                 presenter.requestUserExpenses(userId)
@@ -56,10 +55,15 @@ class UserSpendingFragment : Fragment(), UserSpendingView<Spending> {
     }
 
     override fun onExpensesLoaded(expenses: List<Spending>) {
-        mySpending.adapter = SpendingAdapter(
-            this@UserSpendingFragment.context!!,
-            expenses
-        )
+        mySpending.adapter = SpendingAdapter(context!!, expenses)
         addButton.setOnClickListener { dialog.show() }
+    }
+
+    private fun configureSpinner(root: View) {
+        ArrayAdapter.createFromResource(
+            root.context,
+            R.array.currencies,
+            android.R.layout.simple_spinner_item
+        ).also { adapter -> root.currency.adapter = adapter }
     }
 }
