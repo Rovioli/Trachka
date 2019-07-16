@@ -1,4 +1,4 @@
-package org.rovioli.trachka.states
+package org.rovioli.trachka.view
 
 import android.view.View
 

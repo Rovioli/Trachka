@@ -1,4 +1,4 @@
-package org.rovioli.trachka.fragments
+package org.rovioli.trachka.view.expenses
 
 import android.content.Context
 import android.os.Bundle
@@ -13,7 +13,10 @@ import kotlinx.android.synthetic.main.user_spending_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.rovioli.trachka.*
+import org.rovioli.trachka.R
+import org.rovioli.trachka.currentTimeSeconds
+import org.rovioli.trachka.model.Spending
+import org.rovioli.trachka.model.ZhrachkaApi
 
 class UserSpendingFragment : Fragment() {
     private var userId = 0
@@ -46,7 +49,7 @@ class UserSpendingFragment : Fragment() {
 
     private fun addSpending(context: Context, root: View) {
         GlobalScope.launch(Dispatchers.Main) {
-            Connector.client.addSpending(
+            ZhrachkaApi.CLIENT.addSpending(
                 userId,
                 currentTimeSeconds(),
                 root.comment.text.toString(),
@@ -74,7 +77,7 @@ class UserSpendingFragment : Fragment() {
     }
 
     private suspend fun showContent(context: Context) {
-        val body = Connector.client.getData().body() ?: throw NoSuchElementException("Have no body")
+        val body = ZhrachkaApi.CLIENT.getData().body() ?: throw NoSuchElementException("Have no body")
         mySpending.adapter = SpendingAdapter(context, getSpending(userId, body))
         addButton.setOnClickListener { dialog.show() }
     }

@@ -1,4 +1,4 @@
-package org.rovioli.trachka.fragments
+package org.rovioli.trachka.view.leaderboard
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,12 +10,12 @@ import kotlinx.android.synthetic.main.stats_fragment.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.rovioli.trachka.Connector
 import org.rovioli.trachka.R
-import org.rovioli.trachka.Spending
-import org.rovioli.trachka.states.TabThriftState
-import org.rovioli.trachka.states.TabWasteState
-import org.rovioli.trachka.states.ViewState
+import org.rovioli.trachka.model.Spending
+import org.rovioli.trachka.model.ZhrachkaApi
+import org.rovioli.trachka.view.leaderboard.states.TabThriftState
+import org.rovioli.trachka.view.leaderboard.states.TabWasteState
+import org.rovioli.trachka.view.ViewState
 
 class StatisticsFragment : Fragment() {
 
@@ -28,7 +28,7 @@ class StatisticsFragment : Fragment() {
         userId = activity?.intent?.getIntExtra("id", 0) ?: 0
         val view = inflater.inflate(R.layout.stats_fragment, container, false)
         GlobalScope.launch(Dispatchers.Main) {
-            val spending: List<Spending> = Connector.client.getData().body() ?: arrayListOf()
+            val spending: List<Spending> = ZhrachkaApi.CLIENT.getData().body() ?: arrayListOf()
             val states: Array<ViewState> = arrayOf(
                 TabWasteState(spending),
                 TabThriftState(spending)

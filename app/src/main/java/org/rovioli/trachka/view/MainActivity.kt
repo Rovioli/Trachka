@@ -1,11 +1,12 @@
-package org.rovioli.trachka
+package org.rovioli.trachka.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import kotlinx.android.synthetic.main.activity_user.*
+import org.rovioli.trachka.R
 
-class UserActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

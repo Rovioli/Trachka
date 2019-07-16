@@ -1,4 +1,4 @@
-package org.rovioli.trachka
+package org.rovioli.trachka.view.expenses
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.spending.view.*
+import org.rovioli.trachka.R
+import org.rovioli.trachka.getDayOfWeek
+import org.rovioli.trachka.model.Spending
 
 class SpendingAdapter(
     private val ctx: Context,

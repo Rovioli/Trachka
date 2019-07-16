@@ -1,4 +1,4 @@
-package org.rovioli.trachka.fragments
+package org.rovioli.trachka.view.notimplemented
 
 import android.os.Bundle
 import android.view.LayoutInflater

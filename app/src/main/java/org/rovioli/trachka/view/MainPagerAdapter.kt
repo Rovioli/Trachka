@@ -1,10 +1,10 @@
-package org.rovioli.trachka
+package org.rovioli.trachka.view
 
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import org.rovioli.trachka.fragments.NotImplementedFragment
-import org.rovioli.trachka.fragments.StatisticsFragment
-import org.rovioli.trachka.fragments.UserSpendingFragment
+import org.rovioli.trachka.view.notimplemented.NotImplementedFragment
+import org.rovioli.trachka.view.leaderboard.StatisticsFragment
+import org.rovioli.trachka.view.expenses.UserSpendingFragment
 
 class MainPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
 

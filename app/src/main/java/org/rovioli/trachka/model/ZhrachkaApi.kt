@@ -1,10 +1,13 @@
-package org.rovioli.trachka
+package org.rovioli.trachka.model
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface ZhrachkaClient {
+interface ZhrachkaApi {
     @GET("zhrachka/home/users")
     suspend fun getUsers(): Response<List<User>>
 
@@ -39,4 +42,13 @@ interface ZhrachkaClient {
         @Query("userid") userid: Int?,
         @Query("id") id: Int?
     ): Int?
+
+    companion object {
+        val CLIENT: ZhrachkaApi = Retrofit.Builder()
+            .baseUrl("")
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .build()
+            .create(ZhrachkaApi::class.java)
+    }
 }

@@ -1,4 +1,4 @@
-package org.rovioli.trachka
+package org.rovioli.trachka.model
 
 import com.google.gson.annotations.SerializedName
 

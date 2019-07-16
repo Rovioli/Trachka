@@ -12,4 +12,4 @@ fun getDayOfWeek(i: Int) = week[i - 1]
 
 fun currentTimeSeconds(): Long? = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
 
-fun View.getString(id: Int) = this.context.getString(id)
+fun View.getString(id: Int): String = this.context.getString(id)
