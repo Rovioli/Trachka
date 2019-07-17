@@ -11,13 +11,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.rovioli.trachka.R
+import org.rovioli.trachka.model.CurrencyRepository
 import org.rovioli.trachka.model.Spending
 import org.rovioli.trachka.model.ZhrachkaApi
 import org.rovioli.trachka.view.leaderboard.states.TabThriftState
 import org.rovioli.trachka.view.leaderboard.states.TabWasteState
 import org.rovioli.trachka.view.ViewState
 
-class StatisticsFragment : Fragment() {
+class StatisticsFragment(
+    private val currencyRepository: CurrencyRepository
+) : Fragment() {
 
     private var userId = 0
     override fun onCreateView(
@@ -30,8 +33,8 @@ class StatisticsFragment : Fragment() {
         GlobalScope.launch(Dispatchers.Main) {
             val spending: List<Spending> = ZhrachkaApi.CLIENT.getData().body() ?: arrayListOf()
             val states: Array<ViewState> = arrayOf(
-                TabWasteState(spending),
-                TabThriftState(spending)
+                TabWasteState(spending, currencyRepository /*TODO: sorry my dudes*/),
+                TabThriftState(spending, currencyRepository/*TODO: sorry my dudes*/)
             )
             states[0].select(view)
             view.recordTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

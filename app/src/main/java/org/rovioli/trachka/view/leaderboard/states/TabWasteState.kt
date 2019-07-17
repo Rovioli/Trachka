@@ -6,13 +6,19 @@ import org.rovioli.trachka.R
 import org.rovioli.trachka.model.Spending
 import org.rovioli.trachka.view.leaderboard.StatisticsAdapter
 import org.rovioli.trachka.getString
+import org.rovioli.trachka.model.CurrencyRepository
 import org.rovioli.trachka.view.ViewState
 
-class TabWasteState(private val spending: List<Spending>) : ViewState {
+class TabWasteState(
+    private val spending: List<Spending>,
+    private val currencyRepository: CurrencyRepository
+) : ViewState {
     override fun select(root: View) {
         root.topTitle.text = root.getString(R.string.wasteful_top)
         root.recordList.adapter = StatisticsAdapter(
             root.context,
-            spending.sortedByDescending { it.price })
+            spending.sortedByDescending { it.price },
+            currencyRepository // TODO: OH GOD NO! GOD PLEASE NO!!! NOOOOOOOO!!!!
+        )
     }
 }

@@ -15,18 +15,13 @@ class ExpensesPresenter(
 
     fun requestUserExpenses(userId: Int) {
         GlobalScope.launch(Dispatchers.Main) {
-            try {
-                val body = client.getData(userId).body()
-                    ?: throw NoSuchElementException("Have no body")
-                view.onExpensesLoaded(body.sortedBy { it.timeStamp })
-            } catch (e: Exception) {
-                e.printStackTrace()
-                view.raiseToast("Connection error! ${e.localizedMessage}")
-            }
+            val body = client.getData(userId).body()
+                ?: throw NoSuchElementException("Have no body")
+            view.onExpensesLoaded(body.sortedBy { it.timeStamp })
         }
     }
 
-    fun addExpense(userId: Int, money: Double, comment: String, currency: String) {
+    fun addExpense(userId: Int, money: Double, comment: String, currency: Int) {
         GlobalScope.launch(Dispatchers.Main) {
             client.addSpending(userId, currentTimeSeconds(), comment, money, currency)
             view.raiseToast("Done!")

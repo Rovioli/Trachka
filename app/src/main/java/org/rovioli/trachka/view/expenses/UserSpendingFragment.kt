@@ -11,43 +11,31 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.dialog_add_spending.view.*
 import kotlinx.android.synthetic.main.user_spending_fragment.*
 import org.rovioli.trachka.R
+import org.rovioli.trachka.model.Currency
+import org.rovioli.trachka.model.CurrencyRepository
 import org.rovioli.trachka.model.Spending
 import org.rovioli.trachka.model.ZhrachkaApi
+import org.rovioli.trachka.presenter.CurrencyPresenter
 import org.rovioli.trachka.presenter.ExpensesPresenter
-import java.lang.Exception
 
-class UserSpendingFragment : Fragment(), UserSpendingView<Spending> {
-    private val presenter = ExpensesPresenter(this, ZhrachkaApi.CLIENT)
+class UserSpendingFragment(
+    currencyRepository: CurrencyRepository // TODO: god damn!
+) : Fragment(), UserSpendingView<Spending>, CurrencyView {
+    private val expensePresenter = ExpensesPresenter(this, ZhrachkaApi.CLIENT)
+
+    private val currencyPresenter = CurrencyPresenter(this, currencyRepository)
     private var userId = 0
-
-    private val dialog: AlertDialog by lazy {
-        val root = layoutInflater.inflate(R.layout.dialog_add_spending, null)
-        configureSpinner(root)
-        AlertDialog.Builder(context!!)
-            .setTitle(R.string.add_spending)
-            .setView(root)
-            .setPositiveButton(R.string.add) { _, _ ->
-                presenter.addExpense(
-                    userId,
-                    root.amount_of_money.text.toString().toDouble(), // GOD, PLEASE, NO!!!
-                    root.comment.text.toString(),
-                    root.currency.selectedItem.toString()
-                    // TODO: get datetime
-                )
-                presenter.requestUserExpenses(userId)
-            }
-            .setNegativeButton(android.R.string.cancel) { _, _ -> }
-            .create()
-    }
+    private lateinit var dialog: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        currencyPresenter.requestCurrencies()
+        expensePresenter.requestUserExpenses(userId)
         val view = inflater.inflate(R.layout.user_spending_fragment, container, false)
         userId = activity?.intent?.getIntExtra("id", 0) ?: 0
-        presenter.requestUserExpenses(userId)
         return view
     }
 
@@ -57,14 +45,39 @@ class UserSpendingFragment : Fragment(), UserSpendingView<Spending> {
 
     override fun onExpensesLoaded(expenses: List<Spending>) {
         mySpending.adapter = SpendingAdapter(context!!, expenses)
-        addButton.setOnClickListener { dialog.show() }
+        addButton.setOnClickListener {
+            if (::dialog.isInitialized) {
+                dialog.show()
+            }
+        }
     }
 
-    private fun configureSpinner(root: View) {
-        ArrayAdapter.createFromResource(
+    override fun onCurrenciesLoaded(currencies: List<Currency>) {
+        val root = layoutInflater.inflate(R.layout.dialog_add_spending, null)
+        configureSpinner(root, currencies.map { it.name })
+        dialog = AlertDialog.Builder(context!!)
+            .setTitle(R.string.add_spending)
+            .setView(root)
+            .setPositiveButton(R.string.add) { _, _ ->
+                expensePresenter.addExpense(
+                    userId,
+                    root.amount_of_money.text.toString().toDouble(), // GOD, PLEASE, NO!!!
+                    root.comment.text.toString(),
+                    root.currency.selectedItemId.toInt() + 1
+                    // TODO: get datetime
+                )
+                expensePresenter.requestUserExpenses(userId)
+            }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }
+            .create()
+
+    }
+
+    private fun configureSpinner(root: View, names: List<String>) {
+        ArrayAdapter(
             root.context,
-            R.array.currencies,
-            android.R.layout.simple_spinner_item
+            android.R.layout.simple_spinner_item,
+            names
         ).also { adapter -> root.currency.adapter = adapter }
     }
 }

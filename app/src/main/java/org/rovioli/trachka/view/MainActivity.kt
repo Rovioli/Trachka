@@ -5,13 +5,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import kotlinx.android.synthetic.main.activity_user.*
 import org.rovioli.trachka.R
+import org.rovioli.trachka.model.CurrencyRepository
+import org.rovioli.trachka.model.ZhrachkaApi
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
-        viewPager.adapter = MainPagerAdapter(supportFragmentManager)
+        viewPager.adapter = MainPagerAdapter(
+            supportFragmentManager,
+            CurrencyRepository(ZhrachkaApi.CLIENT) // TODO: hhhhhkhhhhhhhhhhhъ
+        )
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }

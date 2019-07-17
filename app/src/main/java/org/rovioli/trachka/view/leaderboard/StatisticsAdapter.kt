@@ -9,13 +9,16 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.stats_card.view.*
 import org.rovioli.trachka.R
+import org.rovioli.trachka.model.Currency
+import org.rovioli.trachka.model.CurrencyRepository
 import org.rovioli.trachka.model.Spending
 
 val TAG = StatisticsAdapter::class.java.toString()
 
 class StatisticsAdapter(
     private val ctx: Context,
-    private val stats: List<Spending>
+    private val stats: List<Spending>,
+    private val currencyRepo: CurrencyRepository
 ) : ArrayAdapter<Spending>(ctx, R.layout.stats_card) {
 
     private val backgroundColors = arrayOf(
@@ -34,7 +37,7 @@ class StatisticsAdapter(
                 background = ctx.getDrawable(backgroundColors[position])
                 name.text     = stats[position].username
                 money.text    = stats[position].price.toString()
-                currency.text = stats[position].cur
+                currency.text = currencyRepo.getCurrencyById(stats[position].currencyId).name
                 setCardTextColor(android.R.color.white)
             }
         }

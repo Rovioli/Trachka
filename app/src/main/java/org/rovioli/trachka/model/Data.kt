@@ -19,5 +19,11 @@ data class Spending(
     val timeStamp: Int,
     @SerializedName("time_stampISO8601")
     val timeStampIso: String,
-    val cur: String
+    @SerializedName("cur")
+    val currencyId: Int
+)
+
+data class Currency(
+    val id: Int,
+    val name: String
 )
