@@ -19,13 +19,16 @@ interface ZhrachkaApi {
         @Query("userid") userid: Int?
     ): Response<List<Spending>>
 
+    @GET("zhrachka/home/currency")
+    suspend fun getCurrencies(): Response<List<Currency>>
+
     @GET("zhrachka/home/addspendings")
     suspend fun addSpending(
         @Query("userid") userid: Int,
         @Query("time_stamp") time: Long,
         @Query("descr") descr: String,
         @Query("price") price: Double,
-        @Query("cur") currency: String
+        @Query("cur") currencyId: Int
     ): Int?
 
     @GET("zhrachka/home/editspendings")
