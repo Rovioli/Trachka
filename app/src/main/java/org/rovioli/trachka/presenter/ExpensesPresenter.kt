@@ -17,7 +17,7 @@ class ExpensesPresenter(
         GlobalScope.launch(Dispatchers.Main) {
             val body = client.getData(userId).body()
                 ?: throw NoSuchElementException("Have no body")
-            view.onExpensesLoaded(body.sortedBy { it.timeStamp })
+            view.onExpensesLoaded(body.sortedByDescending { it.timeStamp })
         }
     }
 

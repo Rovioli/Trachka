@@ -32,10 +32,10 @@ class UserSpendingFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        userId = activity?.intent?.getIntExtra("id", 0) ?: 0
+        val view = inflater.inflate(R.layout.user_spending_fragment, container, false)
         currencyPresenter.requestCurrencies()
         expensePresenter.requestUserExpenses(userId)
-        val view = inflater.inflate(R.layout.user_spending_fragment, container, false)
-        userId = activity?.intent?.getIntExtra("id", 0) ?: 0
         return view
     }
 
