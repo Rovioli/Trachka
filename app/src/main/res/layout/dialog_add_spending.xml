@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-    <Spinner
-            android:id="@+id/currency"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:paddingTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
     <EditText
             android:id="@+id/amount_of_money"
             android:inputType="numberDecimal"
-            android:layout_width="match_parent"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:hint="@string/money"/>
+            android:hint="@string/money"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"/>
+    <Spinner
+            android:id="@+id/currency"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_alignBottom="@id/amount_of_money"
+            android:paddingTop="16dp"
+            android:layout_toEndOf="@+id/amount_of_money"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignEnd="@id/comment"
+            android:layout_alignTop="@+id/amount_of_money" />
 
     <EditText
             android:id="@+id/comment"
@@ -29,8 +36,9 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:maxLines="3"
+            android:layout_below="@id/amount_of_money"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:hint="@string/comment"/>
-</LinearLayout>
+</RelativeLayout>
