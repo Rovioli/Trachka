@@ -44,7 +44,7 @@ class UserSpendingFragment(
     }
 
     override fun onExpensesLoaded(expenses: List<Spending>) {
-        mySpending.adapter = SpendingAdapter(context!!, expenses)
+        mySpending.adapter = SpendingAdapter(R.layout.spending, expenses)
         addButton.setOnClickListener {
             if (::dialog.isInitialized) {
                 dialog.show()

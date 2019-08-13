@@ -1,42 +1,31 @@
 package org.rovioli.trachka.view.expenses
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
+import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kotlinx.android.synthetic.main.spending.view.*
-import org.rovioli.trachka.R
-import org.rovioli.trachka.getDayOfWeek
+import org.rovioli.trachka.inflate
 import org.rovioli.trachka.model.Spending
+import  org.rovioli.trachka.view.expenses.SpendingAdapter.SpendingHolder
 
 class SpendingAdapter(
-    private val ctx: Context,
-    private val spending: List<Spending>,
-    private val showName: Boolean = false
-) : ArrayAdapter<Spending>(ctx, R.layout.spending) {
+    private val itemId: Int,
+    private val expenses: List<Spending>
+) : Adapter<SpendingHolder>() {
 
-    @SuppressLint("ViewHolder")
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val layout = inflater.inflate(R.layout.spending, parent, false)
-        setVisibility(layout, position, showName)
-        layout.comment.text = spending[position].descr
-        layout.money.text = spending[position].price.toString()
-        return layout
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SpendingHolder(parent.inflate(itemId))
 
-    override fun getCount() = spending.size
+    override fun onBindViewHolder(holder: SpendingHolder, position: Int) = holder.bind(position)
 
-    private fun setVisibility(parent: View, position: Int, visible: Boolean) {
-        val info = parent.findViewById<View>(R.id.commonInfo)
-        if (visible) {
-            info.visibility = View.VISIBLE
-            parent.name.text = spending[position].username
-            parent.dayOfWeek.text = getDayOfWeek(spending[position].dow)
-        } else {
-            info.visibility = View.GONE
+    override fun getItemCount() = expenses.size
+
+
+    inner class SpendingHolder(private val view: View) : ViewHolder(view) {
+        fun bind(position: Int) = with(expenses[position]) {
+            view.name.text      = username
+            view.dayOfWeek.text = downame
+            view.comment.text   = descr
         }
     }
 }
